@@ -1,81 +1,50 @@
-# Recipe Book Frontend
+# Welcome to your Expo app 👋
 
-A minimal React Native (Expo) app for browsing recipes, managing favorites, and viewing recipe details.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Features
+## Get started
 
-- **Authentication**: Login and registration
-- **Recipe Browsing**: View all recipes with search functionality
-- **Recipe Details**: View full recipe information including ingredients and instructions
-- **Favorites**: Save and manage favorite recipes
-- **Profile**: View user profile and logout
+1. Install dependencies
 
-## Prerequisites
+   ```bash
+   npm install
+   ```
 
-- Node.js (v14 or higher)
-- Expo CLI
-- Backend API running on `http://localhost:5001`
+2. Start the app
 
-## Installation
+   ```bash
+   npx expo start
+   ```
 
-1. Navigate to the client directory:
+In the output, you'll find options to open the app in a
+
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
 ```bash
-cd client
+npm run reset-project
 ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Running the App
+## Learn more
 
-Start the Expo development server:
-```bash
-npm start
-```
+To learn more about developing your project with Expo, look at the following resources:
 
-Then:
-- Press `a` for Android emulator
-- Press `i` for iOS simulator
-- Scan QR code with Expo Go app for physical device
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Default Test User
+## Join the community
 
-Use these credentials to login:
-- **Email**: `emily.johnson@example.com`
-- **Password**: `password123`
+Join our community of developers creating universal apps.
 
-## Project Structure
-
-```
-client/
-├── screens/           # App screens
-│   ├── LoginScreen.jsx
-│   ├── RecipesScreen.jsx
-│   ├── RecipeDetailScreen.jsx
-│   ├── FavoritesScreen.jsx
-│   └── ProfileScreen.jsx
-├── services/          # API services
-│   └── api.js
-├── context/           # React contexts
-│   └── AuthContext.jsx
-└── App.jsx           # Main app entry
-```
-
-## API Configuration
-
-The app connects to the backend API at `http://localhost:5001/api`. 
-
-To change the API URL, edit `client/services/api.js`:
-```javascript
-const API_URL = 'http://your-api-url/api';
-```
-
-## Key Dependencies
-
-- `expo`: React Native framework
-- `@react-navigation/native`: Navigation
-- `@react-navigation/stack`: Stack navigation
-- `@react-navigation/bottom-tabs`: Tab navigation
-- `@react-native-async-storage/async-storage`: Local storage for tokens
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

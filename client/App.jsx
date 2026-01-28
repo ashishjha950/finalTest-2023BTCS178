@@ -1,133 +1,64 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AuthProvider, useAuth } from './hooks/useAuth';
 import { ActivityIndicator, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
-// Screens
-import LoginScreen from './screens/LoginScreen';
-import RecipesScreen from './screens/RecipesScreen';
-import RecipeDetailScreen from './screens/RecipeDetailScreen';
-import FavoritesScreen from './screens/FavoritesScreen';
-import ProfileScreen from './screens/ProfileScreen';
+import LoginScreen from './screen/LoginScreen';
+import RegisterScreen from './screen/RegisterScreen';
+import HomeScreen from './screen/HomeScreen';
+import RecipeDetailScreen from './screen/RecipeDetailScreen';
+import FavoritesScreen from './screen/FavoritesScreen';
+import ProfileScreen from './screen/ProfileScreen';
+import AddRecipeScreen from './screen/AddRecipeScreen';
+import MealPlanScreen from './screen/MealPlanScreen';
+import MealPlanDetailScreen from './screen/MealPlanDetailScreen';
 
-import { THEME } from './constants/theme';
+const Stack = createNativeStackNavigator();
 
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const Navigation = () => {
+    const { user, loading } = useAuth();
 
-function TabNavigator() {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: THEME.colors.primary,
-        tabBarInactiveTintColor: THEME.colors.text.light,
-        headerStyle: {
-          backgroundColor: THEME.colors.surface,
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 1,
-          borderBottomColor: '#F0F0F0',
-        },
-        headerTitleStyle: {
-          fontWeight: '800',
-          fontSize: 20,
-          color: THEME.colors.text.main,
-          letterSpacing: -0.5,
-        },
-        tabBarStyle: {
-          backgroundColor: THEME.colors.surface,
-          borderTopWidth: 1,
-          borderTopColor: '#F0F0F0',
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
-        }
-      }}
-    >
-      <Tab.Screen
-        name="Recipes"
-        component={RecipesScreen}
-        options={{
-          tabBarLabel: 'Kitchen',
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'restaurant' : 'restaurant-outline'} size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{
-          tabBarLabel: 'Saved',
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'bookmark' : 'bookmark-outline'} size={24} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Chef',
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'person' : 'person-outline'} size={24} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#223973" />
+            </View>
+        );
+    }
 
-function AppNavigator() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: THEME.colors.background }}>
-        <ActivityIndicator size="large" color={THEME.colors.primary} />
-      </View>
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                {user ? (
+                    <>
+                        <Stack.Screen name="Home" component={HomeScreen} />
+                        <Stack.Screen name="Favorites" component={FavoritesScreen} />
+                        <Stack.Screen name="Profile" component={ProfileScreen} />
+                        <Stack.Screen name="AddRecipe" component={AddRecipeScreen} />
+                        <Stack.Screen name="MealPlan" component={MealPlanScreen} />
+                        <Stack.Screen name="MealPlanDetail" component={MealPlanDetailScreen} />
+                        <Stack.Screen
+                            name="RecipeDetail"
+                            component={RecipeDetailScreen}
+                            options={{ headerShown: false }}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Stack.Screen name="Login" component={LoginScreen} />
+                        <Stack.Screen name="Register" component={RegisterScreen} />
+                    </>
+                )}
+            </Stack.Navigator>
+        </NavigationContainer>
     );
-  }
-
-  return (
-    <Stack.Navigator>
-      {!user ? (
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-      ) : (
-        <>
-          <Stack.Screen
-            name="Main"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="RecipeDetail"
-            component={RecipeDetailScreen}
-            options={{ headerShown: false }}
-          />
-        </>
-      )}
-    </Stack.Navigator>
-  );
-}
+};
 
 export default function App() {
-  return (
-    <AuthProvider>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
-    </AuthProvider>
-  );
+    return (
+        <AuthProvider>
+            <Navigation />
+        </AuthProvider>
+    );
 }

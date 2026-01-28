@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "testPrep",
-    "slug": "testPrep",
+    "name": "Udit_test_app",
+    "slug": "Udit_test_app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "testprep",
+    "scheme": "udittestapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -26,6 +26,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "expo-router",
       [
         "expo-splash-screen",
         {
@@ -40,6 +41,7 @@
       ]
     ],
     "experiments": {
+      "typedRoutes": true,
       "reactCompiler": true
     }
   }
